@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>weibo</title>
+    <style>
+        body {
+            font-size: 12px;
+            font-family: "微软雅黑";
+        }
+
+        #div1 {
+            width: 400px;
+            margin: 20px auto;
+        }
+
+        #div1 p {
+            float: right;
+            margin: 0;
+            color: #EB7350;
+        }
+
+        #div1 textarea {
+            width: 400px;
+            height: 100px;
+            resize: none;
+            outline: none;
+        }
+
+        #div1 textarea.tShow {
+            border: 1px #FA7D3C solid;
+        }
+
+        #div1 a {
+            width: 50px;
+            height: 30px;
+            font-size: 16px;
+            line-height: 30px;
+            text-align: center;
+            float: right;
+            background: #FF8140;
+            color: #fff;
+            border-radius: 2px;
+            text-decoration: none;
+        }
+
+        #div1 a.dis {
+            font-size: 14px;
+            background: #FFC09F;
+            color: #fff;
+            border-radius: 2px;
+        }
+
+    </style>
+    <script type="text/javascript">
+        //onchange:失去光标一次触发一次，只能触发一次
+        //ie：onpropertychange:输入连续触发
+        //标准:oninput:输入连续触发
+
+        window.onload = function () {
+            var oDiv = document.getElementById("div1");
+            var oP = oDiv.getElementsByTagName("p")[0];
+            var oT = oDiv.getElementsByTagName("textarea")[0];
+            var oA = oDiv.getElementsByTagName("a")[0];
+
+            var bBtn = true;
+            var timer = null;
+            var iNum = 0;
+
+            oT.onfocus = function () {
+                oT.className = "tShow";
+                if (bBtn) {
+                    oP.innerHTML = "<span></span>";
+                    oT.style.marginTop = "17px";
+                    bBtn = false;
+                }
+            };
+
+            oT.onblur = function () {
+                oT.className = "";
+                if (oT.value == "") {
+                    oP.innerHTML = "涉非法下载共享动画片>>　热门微博>>";
+                    oT.style.marginTop = "0px";
+                    bBtn = true;
+                }
+            };
+
+            oT.oninput = toChange;
+
+            function toChange() {
+                var num = Math.ceil(getLength(oT.value) / 2);
+                var oSpan = oDiv.getElementsByTagName("span")[0];
+
+                if (num > 0 && num < 140) {
+                    oSpan.innerHTML = "已输入<span>" + num + "</span>字";
+                    oSpan.style.fontStyle = "italic";
+                    oSpan.style.color = "#808080";
+                    oT.style.marginTop = "0px";
+
+                } else if (num >= 140 && num <= 2000) {
+                    oSpan.innerHTML = "已输入<span>" + num + "</span>字";
+                    oSpan.style.fontStyle = "italic";
+                    oSpan.style.color = "#808080";
+                    oT.style.marginTop = "0px";
+                    var oNum = oSpan.getElementsByTagName("span")[0];
+                    oNum.style.color = "#FF9900";
+                    oNum.style.fontWeight = 900;
+                } else if (num == 0) {
+                    oSpan.innerHTML = "";
+                    oT.style.marginTop = "17px";
+                } else {
+                    oSpan.innerHTML = "已超出<span>" + (num - 2000) + "</span>字";
+                    oSpan.style.fontStyle = "italic";
+                    oSpan.style.color = "#808080";
+                    oT.style.marginTop = "0px";
+                    var oNum = oSpan.getElementsByTagName("span")[0];
+                    oNum.style.color = "#FF0000";
+                    oNum.style.fontWeight = 900;
+                }
+
+                if (oT.value == "" || num > 2000) {
+                    oA.className = "dis";
+                } else {
+                    oA.className = "";
+                }
+            }
+
+            function getLength(str) {
+                return String(str).replace(/[^\x00-\xff]/g, "aa").length;//匹配汉字
+            }
+
+            oA.onclick = function () {
+                if (this.className == "dis") {
+                    clearInterval(timer);
+                    timer = setInterval(function () {
+
+                        if (iNum == 3) {
+                            clearInterval(timer);
+                            iNum = 0;
+                        } else {
+                            iNum++;
+                        }
+
+                        if (iNum % 2) {
+                            oT.style.background = "#FFCCCC";
+                        } else {
+                            oT.style.background = "";
+                        }
+                    }, 300);
+                } else {
+                    alert("发布成功");
+                }
+            };
+        };
+    </script>
+</head>
+<body>
+<div id="div1">
+    <p>涉非法下载共享动画片>>　热门微博>></p>
+    <textarea id="t1"></textarea>
+    <a class="dis" href="javascript:;">发布</a>
+</div>
+</body>
+</html>
