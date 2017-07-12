@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>加载效果</title>
+    <style type=text/css rel=stylesheet>
+        /*这是背景，持续两秒*/
+        body:before { /*在body之前添加*/
+            content: " "; /*定义插入的内容，这里设置为空*/
+            position: fixed; /*定位属性：盒子*/
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: auto; /*设置边距*/
+            height: 100vh; /*vh相对于视口的高度。视口被均分为100vh*/
+            background: #fff; /*背景色为白色*/
+            z-index: 999; /*元素的层叠顺序，越大越靠近用户*/
+            animation-name: bg; /*设置应用的动画名称，必须与keyframes配合使用，因为动画名称由keyfarmes定义*/
+            animation-duration: 2s; /*动画持续的时间*/
+            animation-timing-function: ease; /*设置动画的过渡形式为平滑过渡*/
+            animation-iteration-count: 1; /*设置动画播放循环的次数*/
+            animation-fill-mode: forwards; /*设置对象状态为动画结束时的状态*/
+        }
+
+        @keyframes bg { /*指定动画名称和动画效果*/
+            /*设置某个时间段内的任意时间点的样式*/
+            0% {
+                height: 100vh;/*相对于视口的高度*/
+            }
+            80% {
+                height: 100vh;/*相对于视口的高度*/
+            }
+            100% {
+                height: 0vh;
+                display: none; /*设置元素不显示*/
+            }
+        }
+
+        /*这是前面的动画效果*/
+        body:after {
+            content: ""; /*定义插入的内容，这里设置为空*/
+            position: fixed; /*定位属性：盒子*/
+            top: 0;
+            left: 0;
+            right: auto;
+            bottom: auto; /*设置边距*/
+            height: 1vh; /*设置相对于视口的高度*/
+            background: #4ebcff; /*背景色*/
+            z-index: 1000; /*元素的层叠顺序，越大越靠近用户*/
+            animation-name: animate; /*动画名称*/
+            animation-duration: 1.6s; /*动画持续时间*/
+            animation-timing-function: ease; /*动画的过渡形式为平滑过渡*/
+            animation-iteration-count: 1; /*动画的播放次数为1次*/
+            animation-fill-mode: forwards; /*动画结束时候的对象状态*/
+        }
+
+        @keyframes animate {
+            /*设置某个时间段内的任意时间点的样式*/
+            0% {
+                width: 0vw; /*相对于视口的宽度*/
+            }
+            50% {
+                width: 50vw;/*相对于视口的宽度*/
+            }
+            80% {
+                width: 50vw;/*相对于视口的宽度*/
+            }
+            95% {
+                width: 100vw;
+                height: 1vh;/*从0%到90%都是1vh，90%到100%从1vh递减为0vh*/
+            }
+            100% {
+                width: 100vw;/*相对于视口的宽度*/
+                height: 0vh;/*相对于视口的高度*/
+            }
+        }
+
+        body {
+            background: rgb(159, 255, 53);
+        }
+    </style>
+</head>
+<body>
+abcdef
+</body>
+</html>
