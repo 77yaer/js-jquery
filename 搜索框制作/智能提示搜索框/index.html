@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-COMPATIBLE" content="IE=edge"/>
+    <title>bing search</title>
+    <style type="text/css">
+        body {
+            background-color: #333;
+            padding: 0;
+            margin: 0;
+        }
+
+        .bg-div {
+            background: url(river.jpg) no-repeat;
+            width: 1228px;
+            height: 690px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .logo {
+            background: url("logo.png");
+            width: 107px;
+            height: 53px;
+            float: left;
+            margin: -8px 18px 0 0;
+        }
+
+        form {
+            float: left;
+            background-color: #fff;
+            padding: 5px;
+        }
+
+        .search-text {
+            border: 0;
+            float: left;
+            height: 25px;
+            line-height: 25px; /*为了使文本垂直居中*/
+            outline: none; /*设置输入框边框为空*/
+            width: 350px;
+        }
+
+        .search-button {
+            border: 0;
+            background-image: url("search-button.png");
+            width: 29px;
+            height: 29px;
+            float: left;
+        }
+
+        .search-box {
+            position: absolute;
+            top: 200px;
+            left: 300px;
+        }
+
+        .suggest {
+            width: 388px;
+            border: 1px solid #999;
+            background: #FFF;
+        }
+
+        .suggest ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .suggest ul li {
+            padding: 3px;
+            font-size: 14px;
+            line-height: 25px;
+            cursor: pointer; /*设置当鼠标移入的时候光标变为手形*/
+        }
+
+        .suggest ul li:hover {
+            text-decoration: underline;
+            background-color: #e5e5e5;
+        }
+
+    </style>
+</head>
+<body>
+<div class="bg-div">
+    <div class="search-box">
+        <div class="logo"></div>
+        <form id="search-form" action="http://cn.bing.com/search" target="_self">
+            <input type="text" id="search_input" class="search-text" name="q" autocomplete="off"/>
+            <input type="submit" class="search-button" value=""/>
+        </form>
+    </div>
+    <div class="suggest" id="search-suggest" style="display: none;">
+        <ul id="search-result">
+            <li>cheng</li>
+            <li>搜索结果1</li>
+            <li>搜索结果2</li>
+        </ul>
+    </div>
+    <script type="text/javascript" src="jq.js"></script>
+    <script type="text/javascript">
+        $("#search_input").bind("keyup", function () {
+            var searchText = $("#search_input").val();
+            $.get("http://cn.bing.com/qsonhs.aspx?q=" + searchText, function (d) {
+                var d = d.AS.Results[0].Suggests;
+                //alert(d.length);
+                var html = " ";
+                for (var i = 0; i < d.length; i++) {
+                    html += "<li>" + d[i].Txt + "</li>";
+
+                }
+                //alert(html);
+                $("#search-result").html(html);
+                //展示列表
+                $("#search-suggest").show().css({
+                    position: "absolute",
+                    top: $("#search-form").offset().top + $("#search-form").height() + 10,
+                    left: $("#search-form").offset().left - 61
+                });
+
+            }, "json");
+        });
+
+        //函数绑定
+        $(document).bind("click", function () {
+            $("#search-suggest").hide();
+        });
+        /*$(".search-button").bind("click", function () {
+         var keyword=$("#search_input").val();
+         });
+         */
+
+        //事件代理
+        $(document).delegate("li", "click", function () {
+            var keyword = $(this).text();
+            location.href = "http://cn.bing.com/search?q=" + keyword;
+        });
+
+    </script>
+</div>
+</body>
+</html>

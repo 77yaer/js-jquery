@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-COMPATIBLE" content="IE=edge"/>
+    <title>bing search</title>
+    <style type="text/css">
+        body {
+            background-color: #333;
+            padding: 0;
+            margin: 0;
+        }
+
+        .bg-div {
+            background: url(river.jpg) no-repeat;
+            width: 1228px;
+            height: 690px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .logo {
+            background: url("logo.png");
+            width: 107px;
+            height: 53px;
+            float: left;
+            margin: -8px 18px 0 0;
+        }
+
+        form {
+            float: left;
+            background-color: #fff;
+            padding: 5px;
+            border-radius: 2px;
+        }
+
+        .search-input-text {
+            border: 0;
+            float: left;
+            height: 25px;
+            line-height: 25px; /*为了使文本垂直居中*/
+            outline: none; /*设置输入框边框为空*/
+            width: 350px;
+        }
+
+        .search-input-button {
+            border: 0;
+            background-image: url("search-button.png");
+            width: 29px;
+            height: 29px;
+            float: left;
+        }
+
+        .search-fox {
+            position: absolute;
+            top: 200px;
+            left: 300px;
+        }
+
+    </style>
+</head>
+<body>
+<div class="bg-div">
+    <div class="search-fox">
+        <div class="logo"></div>
+        <form>
+            <input type="text" class="search-input-text"/>
+            <input type="submit" class="search-input-button" value=""/>
+        </form>
+    </div>
+</div>
+</body>
+</html>
